@@ -4,9 +4,6 @@ import com.euromoon.model.person.Passenger;
 
 /**
  * Represents a ticket purchased by a passenger for a specific journey.
- *
- * @author Student
- * @version 1.0
  */
 
 

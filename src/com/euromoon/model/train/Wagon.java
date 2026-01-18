@@ -3,9 +3,6 @@ import com.euromoon.model.types.TicketClass;
 
 /**
  * Represents a train wagon with a specific class and capacity.
- *
- * @author Student
- * @version 1.0
  */
 
 

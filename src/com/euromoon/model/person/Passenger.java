@@ -10,8 +10,8 @@ import java.time.LocalDate;
 
 
 public class Passenger extends Person {
-    public Passenger(String firstName, String lastName, String nationRegisterNumber, LocalDate birthDay){
-        super(firstName,lastName,nationRegisterNumber,birthDay);
+    public Passenger(String firstName, String lastName, String nationalRegisterNumber, LocalDate birthDate){
+        super(firstName,lastName,nationalRegisterNumber,birthDate);
     }
     @Override
     public String toString(){

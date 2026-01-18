@@ -12,13 +12,24 @@ import java.util.List;
 
 
 
-public class Employee extends Person {
+public abstract class Employee extends Person {
     private List<Certification> certifications;
 
-    public Employee(String firstName, String lastName, String nationRegisterNumber, LocalDate birthDay){
-        super(firstName,lastName,nationRegisterNumber,birthDay);
+    public Employee(String firstName, String lastName, String nationalRegisterNumber, LocalDate birthDate){
+        super(firstName,lastName,nationalRegisterNumber,birthDate);
         this.certifications = new ArrayList<>();
     }
+
+
+    /**
+     * Constructor for Employee
+     *
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param nationalRegisterNumber the national register number
+     * @param birthDate the birth date
+     */
+
     /**
      * Adds a certification to this employee
      *

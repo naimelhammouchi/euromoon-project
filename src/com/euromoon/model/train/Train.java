@@ -6,9 +6,6 @@ import java.util.List;
 /**
  * Represents a train consisting of a locomotive and wagons.
  * Enforces the maximum wagon limit based on the locomotive type.
- *
- * @author Student
- * @version 1.0
  */
 
 

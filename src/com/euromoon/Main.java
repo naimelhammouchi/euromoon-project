@@ -25,8 +25,6 @@ public class Main {
     private static List<Journey> journeys = new ArrayList<>();
     private static List<Ticket> tickets = new ArrayList<>();
     private static List<Employee> employees = new ArrayList<>();
-    private static Random random = new Random();
-
     public static void main(String[] args){
         initializeSampleData();
 

@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 
 public class Conductor extends Employee {
-    public Conductor(String firstName, String lastName, String nationRegisterNumber, LocalDate birthDay){
-        super(firstName,lastName,nationRegisterNumber,birthDay);
+    public Conductor(String firstName, String lastName, String nationalRegisterNumber, LocalDate birthDate){
+        super(firstName,lastName,nationalRegisterNumber,birthDate);
     }
 
 

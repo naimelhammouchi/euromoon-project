@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 
 public class BaggageHandler extends Employee {
-    public BaggageHandler(String firstName, String lastName, String nationRegisterNumber, LocalDate birthDay){
-        super(firstName,lastName,nationRegisterNumber,birthDay);
+    public BaggageHandler(String firstName, String lastName, String nationalRegisterNumber, LocalDate birthDate){
+        super(firstName,lastName,nationalRegisterNumber,birthDate);
     }
     @Override
     public String toString(){

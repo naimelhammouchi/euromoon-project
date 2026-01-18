@@ -4,9 +4,6 @@ import java.time.LocalDate;
 /**
  * Abstract base class representing any person in the Euromoon system
  * Contains common attributes for all people including passengers and employees
- *
- * @author NaïmElHammouchi
- * @version 1.0
  */
 
 

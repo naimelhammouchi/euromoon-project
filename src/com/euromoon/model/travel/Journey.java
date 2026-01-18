@@ -30,6 +30,10 @@ public class Journey {
         this.soldTickets.put(TicketClass.SECOND_CLASS,0);
     }
 
+    public void assignTrain (Train train){
+        this.train = train;
+    }
+
     public void addStaff(Employee employee){
         if (!staff.contains(employee)){
             staff.add(employee);

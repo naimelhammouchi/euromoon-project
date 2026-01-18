@@ -2,7 +2,7 @@ package com.euromoon.model.types;
 
 public enum Certification {
     SAFETY("Veiligheid"),
-    DRIVER_LICENCE_B1("Rijbewijs B1 (personenvervoer)"),
+    DRIVER_LICENSE_B1("Rijbewijs B1 (personenvervoer)"),
     DRIVER_LICENCE_A3("Rijbewijs A3 (onderhousspoorwagens"),
     TOURISM("Toerisme"),
     FIRST_AID("Eerste Hulp"),

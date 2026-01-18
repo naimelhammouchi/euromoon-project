@@ -7,7 +7,7 @@ public class Train {
     private Locomotive locomotive;
     private List<Wagon> wagons;
 
-    private Train(Locomotive locomotive){
+    public Train(Locomotive locomotive){
         this.locomotive = locomotive;
         this.wagons = new ArrayList<>();
     }

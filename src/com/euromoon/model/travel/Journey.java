@@ -12,6 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a train journey between two stations at a specific time.
+ * Requires staff assignment and can have tickets sold for it.
+ */
+
+
 public class Journey {
     private Station departureStation;
     private Station arrivalStation;
@@ -19,6 +25,15 @@ public class Journey {
     private Train train;
     private List<Employee> staff;
     private Map<TicketClass, Integer> soldTickets;
+
+    /**
+     * Constructor for Journey
+     *
+     * @param departureStation the departure station
+     * @param arrivalStation the arrival station
+     * @param departureTime the departure date and time
+     */
+
 
     public Journey(Station departureStation, Station arrivalStation, LocalDateTime departureTime){
         this.departureStation = departureStation;
@@ -30,9 +45,22 @@ public class Journey {
         this.soldTickets.put(TicketClass.SECOND_CLASS,0);
     }
 
+    /**
+     * Assigns a train to this journey
+     *
+     * @param train the train to assign
+     */
+
     public void assignTrain (Train train){
         this.train = train;
     }
+
+    /**
+     * Adds a staff member to this journey
+     *
+     * @param employee the employee to add
+     */
+
 
     public void addStaff(Employee employee){
         if (!staff.contains(employee)){
@@ -40,12 +68,28 @@ public class Journey {
         }
     }
 
+
+    /**
+     * Validates that the journey has the minimum required staff
+     *
+     * @return true if journey has at least 1 conductor and 3 stewards
+     */
+
+
     public boolean hasRequiredStaff(){
         long conductorCount = staff.stream().filter(e -> e instanceof Conductor).count();
         long stewardCount = staff.stream().filter( e -> e instanceof Steward).count();
         return conductorCount >= 1 && stewardCount >=3;
 
     }
+
+
+    /**
+     * Checks if a ticket can be sold for this journey
+     *
+     * @param ticketClass the class of ticket to sell
+     * @return true if capacity is available
+     */
 
     public boolean canSellTicket(TicketClass ticketClass){
         if (train == null){
@@ -57,17 +101,34 @@ public class Journey {
         return sold < capacity;
     }
 
+    /**
+     * Records a ticket sale for this journey
+     *
+     * @param ticketClass the class of the sold ticket
+     * @throws IllegalStateException if no capacity is available
+     */
+
+
     public void sellTickets (TicketClass ticketClass){
         if (!canSellTicket(ticketClass)){
             throw new IllegalStateException("No capacity available for " + ticketClass);
         }
         soldTickets.put(ticketClass, soldTickets.get(ticketClass) +1);
     }
-    public String getBoardingListFilename(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        return departureStation.getName() + "_" + arrivalStation.getName() + "_" + departureTime.format(formatter) + ".txt";
-    }
 
+    /**
+     * Gets the filename for the boarding list
+     *
+     * @return the formatted filename
+     */
+
+
+    public String getBoardingListFilename() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm");  // ← Underscore i.p.v. 'T', streepje i.p.v. dubbele punt
+        return departureStation.getName().replace(" ", "-") + "_" +   // ← Vervang spaties
+                arrivalStation.getName().replace(" ", "-") + "_" +
+                departureTime.format(formatter) + ".txt";
+    }
     public Station getDepartureStation(){
         return departureStation;
     }

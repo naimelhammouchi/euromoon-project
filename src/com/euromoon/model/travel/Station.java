@@ -1,8 +1,20 @@
 package com.euromoon.model.travel;
 
+/**
+ * Represents a train station.
+ */
+
 public class Station {
     private String name;
     private String city;
+
+    /**
+     * Constructor for Station
+     *
+     * @param name the name of the station
+     * @param city the city where the station is located
+     */
+
 
     public Station(String name, String city){
         this.name = name;

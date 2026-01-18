@@ -13,6 +13,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+/**
+ * Main application class for the Euromoon train booking system.
+ * Provides a command-line interface for managing passengers, journeys, trains, and tickets.
+ */
+
+
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static List<Passenger> passengers = new ArrayList<>();
@@ -75,18 +81,27 @@ public class Main {
         scanner.close();
     }
 
+    /**
+     * Displays the main menu options
+     */
+
 
     private static void displayMenu(){
         System.out.println("=== EUROMOON TRAIN BOOKING SYSTEEM ===");
         System.out.println("1. Registreer passagier");
-        System.out.println("2. Registreer passagier");
-        System.out.println("3. Registreer passagier");
-        System.out.println("4. Registreer passagier");
-        System.out.println("5. Registreer passagier");
-        System.out.println("6. Registreer passagier");
+        System.out.println("2. Aanmaken reis");
+        System.out.println("3. Trein koppelen aan reis");
+        System.out.println("4. Ticket verkopen aan passagier");
+        System.out.println("5. Afdrukken boardinglijst");
+        System.out.println("6. Afsluiten");
         System.out.println("\nKies een optie: ");
 
     }
+
+    /**
+     * Registers a new passenger in the system
+     */
+
 
     private static void registerPassenger(){
         System.out.println("\n--- Registreer Passagier ---");
@@ -113,6 +128,11 @@ public class Main {
         }
 
     }
+
+    /**
+     * Creates a new journey between two stations
+     */
+
 
     private static void createJourney(){
         System.out.println("\n--- Aanmaken Reis ---");
@@ -153,6 +173,13 @@ public class Main {
         }
     }
 
+    /**
+     * Assigns staff members to a journey
+     *
+     * @param journey the journey to assign staff to
+     */
+
+
     private static void assignStaffToJourney(Journey journey){
         System.out.println("\nPersoneel toewijzen aan reis: ");
         System.out.println("Beschikbaar personeel:");
@@ -178,6 +205,10 @@ public class Main {
             }
         }
     }
+
+    /**
+     * Assigns a train to an existing journey
+     */
 
 
     private static void assignTrainToJourney(){
@@ -254,6 +285,11 @@ public class Main {
 
     }
 
+    /**
+     * Sells a ticket to a passenger for a journey
+     */
+
+
     private static void sellTicket(){
         if (passengers.isEmpty()){
             System.out.println("\nGeen passagiers geregistreerd. Registreer eerst een passagier");
@@ -285,7 +321,7 @@ public class Main {
             System.out.println((i+1) + ". " + j +
                " [1e klas: " + j.getSoldTicketsCount(TicketClass.FIRST_CLASS) + "/" +
                     (j.getTrain() != null ? j.getTrain().getCapacityForClass(TicketClass.FIRST_CLASS) : "N/A") +
-                    ", 2e klas: " + j.getSoldTicketsCount(TicketClass.SECOND_CLASS) +
+                    ", 2e klas: " + j.getSoldTicketsCount(TicketClass.SECOND_CLASS) + "/" +
                     (j.getTrain() != null ? j.getTrain().getCapacityForClass(TicketClass.SECOND_CLASS) : "N/A") + "]");
 
         }
@@ -338,32 +374,39 @@ public class Main {
 
     }
 
-    private static void printBoardingList() throws IOException {
+    /**
+     * Prints the boarding list for a selected journey to a text file
+     */
+
+
+    private static void printBoardingList() {
         if (journeys.isEmpty()){
             System.out.println("\nGeen reizen beschikbaar");
             return;
         }
 
         System.out.println("\n--- Afdrukken Boardinglijst ---");
-        System.out.println("Beschikbaar reizen:");
+        System.out.println("Beschikbare reizen:");
 
-        for (int i = 0; i < journeys.size(); i++ ){
+        for (int i = 0; i < journeys.size(); i++){
             System.out.println((i+1) + ". " + journeys.get(i));
-
         }
 
-        System.out.println("\nKies een reis (nummer): ");
+        System.out.print("\nKies een reis (nummer): ");
         try {
             int journeyIndex = Integer.parseInt(scanner.nextLine()) - 1;
 
             if (journeyIndex < 0 || journeyIndex >= journeys.size()) {
                 System.out.println("Ongeldige reis nummer.");
                 return;
-
             }
 
             Journey selectedJourney = journeys.get(journeyIndex);
             String filename = selectedJourney.getBoardingListFilename();
+
+            // DEBUG INFO
+            System.out.println("DEBUG: Bestandsnaam = " + filename);
+            System.out.println("DEBUG: Huidige directory = " + System.getProperty("user.dir"));
 
             List<Ticket> journeyTickets = new ArrayList<>();
             for (Ticket ticket : tickets) {
@@ -372,14 +415,20 @@ public class Main {
                 }
             }
 
+            // DEBUG INFO
+            System.out.println("DEBUG: Aantal tickets gevonden = " + journeyTickets.size());
+
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                System.out.println("DEBUG: Writer succesvol geopend!");
+
                 writer.write("BOARDING LIST - EUROMOON");
                 writer.newLine();
                 writer.write("=".repeat(60));
                 writer.newLine();
-                writer.write("Reis: "+ selectedJourney);
+                writer.write("Reis: " + selectedJourney);
                 writer.newLine();
-                writer.write("Datum: " + selectedJourney.getDepartureTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")));
+                writer.write("Datum: " + selectedJourney.getDepartureTime().format(
+                        DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm")));
                 writer.newLine();
                 writer.write("=".repeat(60));
                 writer.newLine();
@@ -387,11 +436,10 @@ public class Main {
 
                 if (journeyTickets.isEmpty()){
                     writer.write("Geen passagiers geboekt voor deze reis.");
-
-                } else{
-                    writer.write("EERSTE KLAS: ");
+                } else {
+                    writer.write("EERSTE KLAS:");
                     writer.newLine();
-                    writer.write("=".repeat(60));
+                    writer.write("-".repeat(60));
                     writer.newLine();
 
                     boolean hasFirstClass = false;
@@ -399,13 +447,11 @@ public class Main {
                         if (ticket.getTicketClass() == TicketClass.FIRST_CLASS){
                             Passenger p = ticket.getPassenger();
                             writer.write(String.format("%-25s %-20s %s",
-                                    p.getFirstName() + " " +p.getLastName(),
+                                    p.getFirstName() + " " + p.getLastName(),
                                     p.getNationalRegisterNumber(),
                                     p.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
                             writer.newLine();
                             hasFirstClass = true;
-
-
                         }
                     }
 
@@ -413,10 +459,11 @@ public class Main {
                         writer.write("Geen passagiers");
                         writer.newLine();
                     }
+
                     writer.newLine();
-                    writer.write("TWEEDE KLAS: ");
+                    writer.write("TWEEDE KLAS:");
                     writer.newLine();
-                    writer.write("=".repeat(60));
+                    writer.write("-".repeat(60));
                     writer.newLine();
 
                     boolean hasSecondClass = false;
@@ -424,15 +471,14 @@ public class Main {
                         if (ticket.getTicketClass() == TicketClass.SECOND_CLASS){
                             Passenger p = ticket.getPassenger();
                             writer.write(String.format("%-25s %-20s %s",
-                                    p.getFirstName() + " " +p.getLastName(),
+                                    p.getFirstName() + " " + p.getLastName(),
                                     p.getNationalRegisterNumber(),
                                     p.getBirthDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
                             writer.newLine();
                             hasSecondClass = true;
-
-
                         }
                     }
+
                     if (!hasSecondClass){
                         writer.write("Geen passagiers");
                         writer.newLine();
@@ -442,18 +488,31 @@ public class Main {
                     writer.write("=".repeat(60));
                     writer.newLine();
                     writer.write("Totaal aantal passagiers: " + journeyTickets.size());
-
                 }
-                System.out.println("Boardinglijst succesvol opgeslagen als: " + filename);
+
+                System.out.println("DEBUG: Alle data geschreven!");
+
             } catch (IOException e){
-                System.out.println("Fout bij het schrijven van het bestand: " + e.getMessage());
+                System.out.println("FOUT bij het schrijven van bestand!");
+                System.out.println("Error type: " + e.getClass().getName());
+                System.out.println("Error message: " + e.getMessage());
+                e.printStackTrace();
             }
+
+            System.out.println("Boardinglijst succesvol opgeslagen als: " + filename);
+            System.out.println("Zoek in: " + System.getProperty("user.dir"));
+
         } catch (NumberFormatException e){
             System.out.println("Ongeldige invoer.");
-
         }
-
     }
+
+
+
+    /**
+     * Initializes the system with sample data for testing
+     */
+
 
     private static void initializeSampleData(){
         Conductor conductor1 = new Conductor("Jan", "De Verdachte", "85.01.01-001.23",

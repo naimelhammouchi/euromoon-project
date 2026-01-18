@@ -1,4 +1,6 @@
 package com.euromoon.model.types;
 
-public class TicketClass {
+public enum TicketClass {
+    FIRST_CLASS,
+    SECOND_CLASS
 }

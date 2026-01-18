@@ -1,6 +1,4 @@
 package com.euromoon.model.person;
-/*package com.euromoon.model.types.Certification; */
-
 import com.euromoon.model.types.Certification;
 
 import java.time.LocalDate;
